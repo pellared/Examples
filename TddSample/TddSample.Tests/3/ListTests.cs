@@ -37,7 +37,8 @@ namespace TddSample.Tests
             const int addedElement = 2;
             list.Add(addedElement);
             list.Last().Should().Be(addedElement);
-
+            list.Should().BeSameAs(new[] { 3, 2 });
+              
             // there should be on unit test for each concept; not for each method!
 
             // tests should be trustworthy, maintanable and readable!
