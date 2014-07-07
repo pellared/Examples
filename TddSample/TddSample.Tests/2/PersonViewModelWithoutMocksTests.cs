@@ -7,32 +7,45 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
 using Xunit;
+using Ploeh.AutoFixture;
 
 namespace TddSample.Tests
 {
     public class PersonViewModelWithoutMocksTests
     {
+        private readonly static Fixture Fixture = new Fixture();
+
         [Fact]
-        public void FirstPerson_PersonListReturnsAList_ReturnsFirstPersonFromTheList()
+        public void Save_ValidUser_StatusWithName()
         {
-            var personListStub = new PersonListLoaderStub();
-            PersonViewModel sut = new PersonViewModel(personListStub);
+            var person = new Person("John", Any<DateTime>());
+            var validator = new PersonValidatorStub();
+            var respository = new PersonRepositoryDummy();
+            PersonViewModel sut = new PersonViewModel(validator, respository);
 
-            Person result = sut.FirstPerson;
+            sut.Save(person);
 
-            result.Should().Be(personListStub.FirstPerson);
+            sut.Status.Should().Be("John saved");
         }
 
-        class PersonListLoaderStub : IPersonListLoader
+        class PersonValidatorStub : IPersonValidator
         {
-            public Person FirstPerson = new Person("John", new DateTime(1987, 12, 1));
-
-            public IEnumerable<Person> Load()
+            public bool IsValid(Person person)
             {
-                yield return FirstPerson;
-                yield return new Person("Bob", new DateTime(1977, 1, 12));
-                yield return new Person("Dave", new DateTime(2001, 3, 5)); 
+                return true;
             }
+        }
+        
+        class PersonRepositoryDummy : IPersonRepository
+        {
+            public void Add(Person person)
+            {
+            }
+        }
+
+        private T Any<T>()
+        {
+            return Fixture.Create<T>();
         }
     }
 }

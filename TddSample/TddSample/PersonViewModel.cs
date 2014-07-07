@@ -6,29 +6,40 @@ using System.Threading.Tasks;
 
 namespace TddSample
 {
-    public interface IPersonListLoader
+    public interface IPersonValidator
     {
-        IEnumerable<Person> Load();
+        bool IsValid(Person person);
+    }
+
+    public interface IPersonRepository
+    {
+        void Add(Person person);
     }
 
     public class PersonViewModel
     {
-        private IPersonListLoader personListLoader;
-        private Lazy<List<Person>> personList;
+        private readonly IPersonValidator validator;
+        private readonly IPersonRepository repository;
 
-        public PersonViewModel(IPersonListLoader personListLoader)
+        public PersonViewModel(IPersonValidator personValidator, IPersonRepository personRepository)
         {
-            this.personListLoader = personListLoader;
-            personList = new Lazy<List<Person>>(() => personListLoader.Load().ToList());
+            validator = personValidator;
+            repository = personRepository;
         }
 
-        public Person FirstPerson
+        public string Status { get; private set; }
+
+        public void Save(Person person)
         {
-            get
+            if (validator.IsValid(person))
             {
-                return personList.Value.FirstOrDefault();
+                repository.Add(person);
+                Status = person.Name + " saved";
+            }
+            else
+            {
+                Status = "Please check the input";
             }
         }
-
     }
 }

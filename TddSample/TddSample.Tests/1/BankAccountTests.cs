@@ -44,6 +44,7 @@ namespace TddSample.Tests
             act.ShouldThrow<ArgumentOutOfRangeException>();
         }
 
+        // http://blog.ploeh.dk/2009/03/05/ConstrainedNon-Determinism/
         private T Any<T>()
         {
             return Fixture.Create<T>();

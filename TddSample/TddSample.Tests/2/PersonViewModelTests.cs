@@ -7,45 +7,49 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
 using Xunit;
+using Ploeh.AutoFixture;
 
 namespace TddSample.Tests
 {
     public class PersonViewModelTests
     {
+        private readonly static Fixture Fixture = new Fixture();
+
         private readonly PersonViewModel sut;
-        private readonly Mock<IPersonListLoader> personListLoaderMock;
+        private readonly Mock<IPersonValidator> validatorMock;
+        private readonly Mock<IPersonRepository> repositoryMock;
 
         public PersonViewModelTests()
         {
-            personListLoaderMock = new Mock<IPersonListLoader>();
-            sut = new PersonViewModel(personListLoaderMock.Object);
+            validatorMock = new Mock<IPersonValidator>();
+            repositoryMock = new Mock<IPersonRepository>();
+            sut = new PersonViewModel(validatorMock.Object, repositoryMock.Object);
         }
 
         [Fact]
-        public void FirstPerson_PersonListReturnsAList_ReturnsFirstPersonFromTheList()
+        public void Save_ValidUser_StatusWithName()
         {
-            Person firstPerson = new Person("John", new DateTime(1987, 12, 1));
-            personListLoaderMock
-                .Setup(x => x.Load())
-                .Returns(new [] 
-                {
-                    firstPerson,
-                    new Person("Bob", new DateTime(1977, 1, 12)),
-                    new Person("Dave", new DateTime(2001, 3, 5))
-                });
+            validatorMock.Setup(x => x.IsValid(It.IsAny<Person>())).Returns(true);
+            var person = new Person("John", Any<DateTime>());
 
-            Person result = sut.FirstPerson;
+            sut.Save(person);
 
-            result.Should().Be(firstPerson);
+            sut.Status.Should().Be("John saved");
         }
 
         [Fact]
-        public void FirstPerson_InvokedManyTimes_LoadsTheListOnlyOnce()
+        public void Save_InvalidUser_ErrorStatus()
         {
-            Person result = sut.FirstPerson;
-            result = sut.FirstPerson;
+            validatorMock.Setup(x => x.IsValid(It.IsAny<Person>())).Returns(false);
 
-            personListLoaderMock.Verify(x => x.Load(), Times.Once);
+            sut.Save(Any<Person>());
+
+            sut.Status.Should().Be("Please check the input");
+        }
+
+        private T Any<T>()
+        {
+            return Fixture.Create<T>();
         }
     }
 }
