@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using FluentAssertions;
 using Xunit;
 
@@ -50,7 +45,7 @@ namespace TddSample.Tests
         [Fact]
         public void Save_ValidUser_StatusWithName()
         {
-            var person = new Person("John", DateTime.Now);
+            var person = PersonMother.Create(DateTime.Now);
             LegacyPersonViewModelWithExtractAndOverride sut = new LegacyPersonViewModelWithExtractAndOverrideUnderTest();
 
             sut.Save(person);
