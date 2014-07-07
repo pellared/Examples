@@ -21,7 +21,7 @@ namespace TddSample.Tests
             var person = new Person("John", Any<DateTime>());
             var validator = new PersonValidatorStub();
             var respository = new PersonRepositoryDummy();
-            PersonViewModel sut = new PersonViewModel(validator, respository);
+            var sut = new PersonViewModel(validator, respository);
 
             sut.Save(person);
 
