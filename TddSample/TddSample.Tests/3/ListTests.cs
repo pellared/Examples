@@ -41,10 +41,10 @@ namespace TddSample.Tests
               
             // there should be on unit test for each concept; not for each method!
 
-            // tests should be trustworthy, maintanable and readable!
+            // tests should be trustworthy, maintainable and readable!
             // if there are not then something is wrong with the tests or the code under test
 
-            // anit-patterns: http://blog.james-carr.org/2006/11/03/tdd-anti-patterns/
+            // anti-patterns: http://blog.james-carr.org/2006/11/03/tdd-anti-patterns/
         }
     }
 }
