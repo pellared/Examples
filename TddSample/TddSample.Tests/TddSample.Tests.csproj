@@ -57,13 +57,15 @@
     <Compile Include="1 - Start\BankAccountTests.cs" />
     <Compile Include="3 - Practices\ListTests.cs" />
     <Compile Include="2 - Test Doubles\PersonViewModelWithoutMocksTests.cs" />
-    <Compile Include="5 - Legacy Code\LegacyPersonViewModelWithExtractAndOverride.cs" />
-    <Compile Include="5 - Legacy Code\LegacyPersonViewModelWithConsutructorInjection.cs" />
-    <Compile Include="4 - Not Testable\PersonTestableTests.cs" />
-    <Compile Include="4 - Not Testable\PersonTests.cs" />
+    <Compile Include="5 - Patterns\StackTests.cs" />
+    <Compile Include="4 - Legacy Code\LegacyPersonViewModel.cs" />
+    <Compile Include="4 - Legacy Code\LegacyPersonViewModelWithExtractAndOverride.cs" />
+    <Compile Include="4 - Legacy Code\LegacyPersonViewModelWithConsutructorInjection.cs" />
+    <Compile Include="4 - Legacy Code\TestablePersonWithSimpleFactory.cs" />
+    <Compile Include="4 - Legacy Code\PersonTests.cs" />
     <Compile Include="2 - Test Doubles\PersonViewModelTests.cs" />
-    <Compile Include="6 - Patterns\PersonMother.cs" />
-    <Compile Include="6 - Patterns\PersonViewModelTestBuilder.cs" />
+    <Compile Include="5 - Patterns\PersonMother.cs" />
+    <Compile Include="5 - Patterns\PersonViewModelTestBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -76,6 +78,10 @@
     <ProjectReference Include="..\TddSample\TddSample.csproj">
       <Project>{99cd847b-c52e-4a5b-8cf4-376a79199e9b}</Project>
       <Name>TddSample</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utils\Utils.csproj">
+      <Project>{5638276e-d426-4a48-ba09-3c543b7c15a7}</Project>
+      <Name>Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

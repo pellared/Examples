@@ -4,6 +4,7 @@ using Xunit;
 
 namespace TddSample.Tests
 {
+    // http://osherove.com/blog/2012/5/16/test-driven-validation-logic-with-extract-override.html
     class LegacyPersonViewModelWithExtractAndOverride
     {
         private readonly PersonRepository repository;
@@ -27,9 +28,9 @@ namespace TddSample.Tests
             }
         }
 
-        virtual protected bool Add(Person person)
+        protected virtual bool Add(Person person)
         {
-           bool isValid = PersonValidator.IsValid(person);
+            bool isValid = PersonValidator.IsValid(person);
             if (!isValid)
             {
                 return false;

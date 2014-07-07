@@ -2,6 +2,7 @@
 
 namespace TddSample.Tests
 {
+    // http://www.natpryce.com/articles/000714.html
     public class PersonViewModelTestBuilder
     {
         private IPersonValidator validator;
