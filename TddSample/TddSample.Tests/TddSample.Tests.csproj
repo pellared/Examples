@@ -54,15 +54,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="1\BankAccountTests.cs" />
-    <Compile Include="3\ListTests.cs" />
-    <Compile Include="2\PersonViewModelWithoutMocksTests.cs" />
-    <Compile Include="5\LegacyPersonViewModelWithExtractAndOverride.cs" />
-    <Compile Include="5\LegacyPersonViewModelWithConsutructorInjection.cs" />
-    <Compile Include="4\PersonTestableTests.cs" />
-    <Compile Include="4\PersonTests.cs" />
-    <Compile Include="2\PersonViewModelTests.cs" />
-    <Compile Include="5\PersonMother.cs" />
+    <Compile Include="1 - Start\BankAccountTests.cs" />
+    <Compile Include="3 - Practices\ListTests.cs" />
+    <Compile Include="2 - Test Doubles\PersonViewModelWithoutMocksTests.cs" />
+    <Compile Include="5 - Legacy Code\LegacyPersonViewModelWithExtractAndOverride.cs" />
+    <Compile Include="5 - Legacy Code\LegacyPersonViewModelWithConsutructorInjection.cs" />
+    <Compile Include="4 - Not Testable\PersonTestableTests.cs" />
+    <Compile Include="4 - Not Testable\PersonTests.cs" />
+    <Compile Include="2 - Test Doubles\PersonViewModelTests.cs" />
+    <Compile Include="6 - Patterns\PersonMother.cs" />
+    <Compile Include="6 - Patterns\PersonViewModelTestBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -77,9 +78,7 @@
       <Name>TddSample</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="6\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

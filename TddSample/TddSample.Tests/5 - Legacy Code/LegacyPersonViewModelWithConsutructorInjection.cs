@@ -5,7 +5,7 @@ using Xunit;
 namespace TddSample.Tests
 
 {
-    class TestableLegacyPersonViewModel
+    class TestableLegacyPersonViewModel 
     {
         private readonly IPersonValidator validator;
         private readonly IPersonRepository repository;
