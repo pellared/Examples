@@ -3,9 +3,8 @@ using Moq;
 using Xunit;
 
 namespace TddSample.Tests
-
 {
-    class TestableLegacyPersonViewModel 
+    class TestableLegacyPersonViewModel
     {
         private readonly IPersonValidator validator;
         private readonly IPersonRepository repository;
@@ -53,13 +52,13 @@ namespace TddSample.Tests
         public void Save_ValidUser_StatusWithName()
         {
             // arrange
-            var validatorMock = new Mock<IPersonValidator>();
-            validatorMock.Setup(x => x.IsValid(It.IsAny<Person>())).Returns(true);
+            var validatorMock = Mock.Of<IPersonValidator>(x =>
+                x.IsValid(It.IsAny<Person>()) == true);
 
             var repositoryMock = new Mock<IPersonRepository>();
 
             var person = PersonMother.Create();
-            var sut = new TestableLegacyPersonViewModel(validatorMock.Object, repositoryMock.Object);
+            var sut = new TestableLegacyPersonViewModel(validatorMock, repositoryMock.Object);
 
             // act
             sut.Save(person);

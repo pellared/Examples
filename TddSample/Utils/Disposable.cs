@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Utils
 {
@@ -28,9 +24,8 @@ namespace Utils
         [SuppressMessage("Microsoft.Design", "CA1063:ImplementIDisposableCorrectly", Justification = "Dispose is implemented correctly, FxCop just doesn't see it.")]
         public void Dispose()
         {
-            var isDisposed = _isDisposed;
-            Interlocked.CompareExchange(ref _isDisposed, DisposedFlag, isDisposed);
-            if (isDisposed == 0)
+            int wasDisposed = Interlocked.Exchange(ref _isDisposed, DisposedFlag);
+            if (wasDisposed != DisposedFlag)
             {
                 DisposeManaged();
                 DisposeUnmanaged();
