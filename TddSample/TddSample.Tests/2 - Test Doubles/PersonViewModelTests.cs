@@ -8,8 +8,6 @@ namespace TddSample.Tests
 {
     public class PersonViewModelTests
     {
-        private readonly static Fixture Fixture = new Fixture();
-
         private readonly PersonViewModel sut;
         private readonly Mock<IPersonValidator> validatorMock;
         private readonly Mock<IPersonRepository> repositoryMock;
@@ -42,6 +40,7 @@ namespace TddSample.Tests
             sut.Status.Should().Be("Please check the input");
         }
 
+        private readonly static Fixture Fixture = new Fixture();
         private T Any<T>()
         {
             return Fixture.Create<T>();

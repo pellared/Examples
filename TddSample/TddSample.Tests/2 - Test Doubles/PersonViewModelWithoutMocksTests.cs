@@ -1,19 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using FluentAssertions;
-using Moq;
-using Xunit;
 using Ploeh.AutoFixture;
+using Xunit;
 
 namespace TddSample.Tests
 {
     public class PersonViewModelWithoutMocksTests
     {
-        private readonly static Fixture Fixture = new Fixture();
+        class PersonRepositoryDummy : IPersonRepository
+        {
+            public void Add(Person person)
+            {
+            }
+        }
+
+        class PersonValidatorStub : IPersonValidator
+        {
+            public bool IsValid(Person person)
+            {
+                return true;
+            }
+        }
+
+        private class PersonRepositoryFake : IPersonRepository
+        {
+            private readonly List<Person> collection = new List<Person>();
+
+            public void Add(Person person)
+            {
+                collection.Add(person);
+            }
+        }
 
         [Fact]
         public void Save_ValidUser_StatusWithName()
@@ -28,22 +46,8 @@ namespace TddSample.Tests
             sut.Status.Should().Be("John saved");
         }
 
-        class PersonValidatorStub : IPersonValidator
-        {
-            public bool IsValid(Person person)
-            {
-                return true;
-            }
-        }
-        
-        class PersonRepositoryDummy : IPersonRepository
-        {
-            public void Add(Person person)
-            {
-            }
-        }
-
-        private T Any<T>()
+        private readonly static Fixture Fixture = new Fixture();
+        private static T Any<T>()
         {
             return Fixture.Create<T>();
         }
