@@ -25,12 +25,11 @@ namespace Utils
         public void Dispose()
         {
             int wasDisposed = Interlocked.Exchange(ref _isDisposed, DisposedFlag);
-            if (wasDisposed != DisposedFlag)
-            {
-                DisposeManaged();
-                DisposeUnmanaged();
-                GC.SuppressFinalize(this);
-            }
+            EnsureNotDisposed(wasDisposed);
+
+            DisposeManaged();
+            DisposeUnmanaged();
+            GC.SuppressFinalize(this);
         }
 
         protected virtual void DisposeManaged()
@@ -50,6 +49,16 @@ namespace Utils
             {
                 Thread.MemoryBarrier();
                 return _isDisposed == DisposedFlag;
+            }
+        }
+
+        private void EnsureNotDisposed(int wasDisposed)
+        {
+            if (wasDisposed == DisposedFlag)
+            {
+                string typeName = GetType().FullName;
+                string stackTrace = new StackTrace().ToString();
+                throw new ObjectDisposedException(typeName, stackTrace);
             }
         }
     }
