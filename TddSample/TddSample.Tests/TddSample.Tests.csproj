@@ -65,7 +65,7 @@
     <Compile Include="4 - Legacy Code\PersonTests.cs" />
     <Compile Include="2 - Test Doubles\PersonViewModelTests.cs" />
     <Compile Include="5 - Patterns\PersonMother.cs" />
-    <Compile Include="5 - Patterns\PersonViewModelTestBuilder.cs" />
+    <Compile Include="5 - Patterns\PersonBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

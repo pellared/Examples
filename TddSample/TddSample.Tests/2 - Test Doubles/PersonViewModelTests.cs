@@ -1,6 +1,7 @@
 ﻿using System;
 using FluentAssertions;
 using Moq;
+using Utils;
 using Xunit;
 using Ploeh.AutoFixture;
 
@@ -23,7 +24,7 @@ namespace TddSample.Tests
         public void Save_ValidUser_StatusWithName()
         {
             validatorMock.Setup(x => x.IsValid(It.IsAny<Person>())).Returns(true);
-            var person = new Person("John", Any<DateTime>());
+            var person = new Person("John", Build.Any<DateTime>());
 
             sut.Save(person);
 
@@ -35,15 +36,9 @@ namespace TddSample.Tests
         {
             validatorMock.Setup(x => x.IsValid(It.IsAny<Person>())).Returns(false);
 
-            sut.Save(Any<Person>());
+            sut.Save(Build.Any<Person>());
 
             sut.Status.Should().Be("Please check the input");
-        }
-
-        private readonly static Fixture Fixture = new Fixture();
-        private T Any<T>()
-        {
-            return Fixture.Create<T>();
         }
     }
 }

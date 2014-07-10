@@ -23,7 +23,7 @@ namespace TddSample.Tests
         [Fact]
         public void AddTests()
         {
-            // COMMON ANTI-PATTERN: The One
+            // Sample common ANTI-PATTERN: The One
             var list = new List<int>();
 
             list.Add(3);
