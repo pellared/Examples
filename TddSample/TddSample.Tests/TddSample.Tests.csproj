@@ -57,6 +57,7 @@
     <Compile Include="1 - Start\BankAccountTests.cs" />
     <Compile Include="3 - Practices\ListTests.cs" />
     <Compile Include="2 - Test Doubles\PersonViewModelWithoutMocksTests.cs" />
+    <Compile Include="5 - Patterns\IListTests.cs" />
     <Compile Include="5 - Patterns\StackTests.cs" />
     <Compile Include="4 - Legacy Code\LegacyPersonViewModel.cs" />
     <Compile Include="4 - Legacy Code\LegacyPersonViewModelWithExtractAndOverride.cs" />

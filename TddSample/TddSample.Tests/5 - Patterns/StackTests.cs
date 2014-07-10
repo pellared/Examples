@@ -1,20 +1,25 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
+using Utils;
 using Xunit;
 
 namespace TddSample.Tests
 {
-    class StackTests
+    public class StackTests
     {
-        public class EmptyStack
+        public class GivenStack : TestBase
         {
-            Stack<int> stack;
+            protected Stack<int> stack;
 
-            public EmptyStack()
+            protected override sealed void Given()
             {
                 stack = new Stack<int>();
             }
+        }
 
+        public class EmptyStack : GivenStack
+        {
             [Fact]
             public void Count_ShouldReturnZero()
             {
@@ -48,15 +53,12 @@ namespace TddSample.Tests
             }
         }
 
-        public class StackWithOneElement
+        public class StackWithOneElement : GivenStack
         {
-            Stack<int> stack;
-            const int pushedValue = 42;
+            readonly int pushedValue = Build.Any<int>();
 
-
-            public StackWithOneElement()
+            protected override sealed void When()
             {
-                stack = new Stack<int>();
                 stack.Push(pushedValue);
             }
 
@@ -105,16 +107,14 @@ namespace TddSample.Tests
             }
         }
 
-        public class StackWithMultipleValues
+        public class StackWithMultipleValues : GivenStack
         {
-            Stack<int> stack;
-            const int firstPushedValue = 42;
-            const int secondPushedValue = 21;
-            const int thirdPushedValue = 11;
+            readonly int firstPushedValue = Build.Any<int>();
+            readonly int secondPushedValue = Build.Any<int>();
+            readonly int thirdPushedValue = Build.Any<int>();
 
-            public StackWithMultipleValues()
+            protected override sealed void When()
             {
-                stack = new Stack<int>();
                 stack.Push(firstPushedValue);
                 stack.Push(secondPushedValue);
                 stack.Push(thirdPushedValue);
@@ -140,6 +140,7 @@ namespace TddSample.Tests
             public void Peek_ReturnsLastPushedValue()
             {
                 int actual = stack.Peek();
+
                 Assert.Equal(thirdPushedValue, actual);
             }
 
@@ -157,12 +158,41 @@ namespace TddSample.Tests
             [Fact]
             public void Pop_ShouldReturnPushedValue()
             {
-                Stack<string> stack = new Stack<string>();
-                stack.Push("Help");
+                // arrange
+                var stack = new Stack<string>();
+                var text = Build.Any<string>();
+                stack.Push(text);
 
+                // act
                 string actual = stack.Pop();
 
-                Assert.Equal("Help", actual);
+                // assert
+                Assert.Equal(text, actual);
+            }
+        }
+
+        public class StackWithStringsAltnerate : TestBase
+        {
+            Stack<string> stack;
+            string text;
+            string result;
+
+            protected override sealed void Given()
+            {
+                text = Build.Any<string>();
+                stack = new Stack<string>();
+                stack.Push(text);
+            }
+
+            protected override sealed void When()
+            {
+                result = stack.Pop();
+            }
+
+            [Fact]
+            public void Pop_ShouldReturnPushedValue()
+            {
+                Assert.Equal(text, result);
             }
         }
     }
