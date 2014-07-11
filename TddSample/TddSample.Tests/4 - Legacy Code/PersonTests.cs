@@ -4,7 +4,7 @@ using Xunit;
 
 namespace TddSample.Tests
 {
-    public class PersonTests
+    class PersonTests
     {
         [Fact]
         public void Age_ForPastDate_ReturnsGoodResult()

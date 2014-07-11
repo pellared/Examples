@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Utils;
 using Xunit;
 
@@ -45,7 +44,7 @@ namespace TddSample.Tests
         }
     }
 
-    public class StringListTests : IListTests<string>
+    class StringListTests : IListTests<string>
     {
         protected override IList<string> CreateList()
         {
@@ -58,7 +57,7 @@ namespace TddSample.Tests
         }
     }
 
-    public class IntListTests : IListTests<int>
+    class IntListTests : IListTests<int>
     {
         protected override IList<int> CreateList()
         {

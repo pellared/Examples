@@ -2,6 +2,7 @@
 
 namespace Utils
 {
+    // http://martinfowler.com/bliki/GivenWhenThen.html
     public class TestBase : IDisposable
     {
         // do not use the constructor in derived classes

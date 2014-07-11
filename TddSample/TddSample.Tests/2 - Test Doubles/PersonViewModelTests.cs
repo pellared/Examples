@@ -3,11 +3,10 @@ using FluentAssertions;
 using Moq;
 using Utils;
 using Xunit;
-using Ploeh.AutoFixture;
 
 namespace TddSample.Tests
 {
-    public class PersonViewModelTests
+    class PersonViewModelTests
     {
         private readonly PersonViewModel sut;
         private readonly Mock<IPersonValidator> validatorMock;

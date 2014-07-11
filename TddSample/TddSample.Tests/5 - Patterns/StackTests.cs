@@ -6,7 +6,7 @@ using Xunit;
 
 namespace TddSample.Tests
 {
-    public class StackTests
+    class StackTests
     {
         public class GivenStack : TestBase
         {
