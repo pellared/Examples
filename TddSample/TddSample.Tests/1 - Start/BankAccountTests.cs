@@ -34,9 +34,9 @@ namespace TddSample.Tests
         {
             var sut = new BankAccount(Any<double>());
 
-            Action act = () => sut.Debit(-1);
+            Exception exception = Record.Exception(() => sut.Debit(-1));
 
-            act.ShouldThrow<ArgumentOutOfRangeException>();
+            exception.Should().BeOfType<ArgumentOutOfRangeException>();
         }
 
         // http://blog.ploeh.dk/2009/03/05/ConstrainedNon-Determinism/

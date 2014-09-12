@@ -46,7 +46,7 @@ namespace TddSample.Tests
         }
     }
 
-    public class TestableLegacyPersonViewModelTests
+    class TestableLegacyPersonViewModelTests
     {
         [Fact]
         public void Save_ValidUser_StatusWithName()

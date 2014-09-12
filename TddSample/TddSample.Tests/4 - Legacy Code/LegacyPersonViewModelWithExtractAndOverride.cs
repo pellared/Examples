@@ -41,7 +41,7 @@ namespace TddSample.Tests
         }
     }
 
-    public class LegacyPersonViewModelWithExtractAndOverrideTests
+    class LegacyPersonViewModelWithExtractAndOverrideTests
     {
         [Fact]
         public void Save_ValidUser_StatusWithName()

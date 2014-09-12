@@ -60,7 +60,7 @@ namespace TddSample.Tests
         }
     }
 
-    public class PersonTestableTests
+    class PersonTestableTests
     {
         [Fact]
         public void Age_ForPastDate_ReturnsAlwaysGoodResult()

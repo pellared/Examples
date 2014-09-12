@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using FluentAssertions;
-using Ploeh.AutoFixture;
+using Utils;
 using Xunit;
 
 namespace TddSample.Tests
 {
-    public class PersonViewModelWithoutMocksTests
+    class PersonViewModelWithoutMocksTests
     {
         class PersonRepositoryDummy : IPersonRepository
         {
@@ -36,7 +36,7 @@ namespace TddSample.Tests
         [Fact]
         public void Save_ValidUser_StatusWithName()
         {
-            var person = new Person("John", Any<DateTime>());
+            var person = new Person("John", Build.Any<DateTime>());
             var validator = new PersonValidatorStub();
             var respository = new PersonRepositoryDummy();
             var sut = new PersonViewModel(validator, respository);
@@ -44,12 +44,6 @@ namespace TddSample.Tests
             sut.Save(person);
 
             sut.Status.Should().Be("John saved");
-        }
-
-        private readonly static Fixture Fixture = new Fixture();
-        private static T Any<T>()
-        {
-            return Fixture.Create<T>();
         }
     }
 }

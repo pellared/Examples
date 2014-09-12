@@ -5,7 +5,7 @@ using Xunit;
 
 namespace TddSample.Tests
 {
-    public class ListTests
+    class ListTests
     {
         [Fact]
         public void Add_OneElement_CountReturnsOne()
@@ -18,12 +18,16 @@ namespace TddSample.Tests
 
             // Assert
             list.Count.Should().Be(1);
+
+            // http://c2.com/cgi/wiki?ArrangeActAssert
+            // http://xp123.com/articles/3a-arrange-act-assert/
+            // http://www.arrangeactassert.com/why-and-what-is-arrange-act-assert/
         }
 
         [Fact]
         public void AddTests()
         {
-            // COMMON ANTI-PATTERN: The One
+            // Sample common ANTI-PATTERN: The One
             var list = new List<int>();
 
             list.Add(3);
