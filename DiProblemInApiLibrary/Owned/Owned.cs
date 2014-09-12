@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DiProblemInApiLibrary
+namespace Pellared.Owned
 {
     public interface IOwned<out T> : IDisposable
     {
         T Value { get; }
     }
 
-    public class Owned<T> : IOwned<T> 
+    public class Owned<T> : IOwned<T>
     {
         public Owned(T value)
         {
@@ -30,23 +30,11 @@ namespace DiProblemInApiLibrary
         }
     }
 
-    public class AutofacOwned<T> : IOwned<T>
+    public static class Owned
     {
-        private readonly Autofac.Features.OwnedInstances.Owned<T> owned;
-
-        public AutofacOwned(Autofac.Features.OwnedInstances.Owned<T> owned)
+        public static IOwned<T> Create<T>(T instance)
         {
-            this.owned = owned;
-        }
-
-        public T Value
-        {
-            get { return owned.Value; }
-        }
-
-        public void Dispose()
-        {
-            owned.Dispose();
+            return new Owned<T>(instance);
         }
     }
 }
