@@ -45,9 +45,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Disposable.cs" />
+    <Compile Include="Disposer.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="Owned.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tests\DisposableTests.cs" />
+    <Compile Include="Tests\DisposerTests.cs" />
     <Compile Include="Tests\FuncFactoryTests.cs" />
     <Compile Include="Tests\OwnedTests.cs" />
   </ItemGroup>

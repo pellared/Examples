@@ -102,11 +102,8 @@ namespace Pellared.Owned.Tests
 
         private class WithArg
         {
-            public string Argument { get; private set; }
-
             public WithArg(string argument)
             {
-                Argument = argument;
             }
         }
     }
