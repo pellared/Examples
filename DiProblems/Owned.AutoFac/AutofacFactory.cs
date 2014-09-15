@@ -4,33 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DiProblemInApiLibrary
+namespace Pellared.Owned
 {
-    interface IFactory<out T>
-    {
-        IOwned<T> Create();
-    }
-
-    interface IFactory<in T, out TOut>
-    {
-        IOwned<TOut> Create(T input);
-    }
-
-    public class FuncFactory<T> : IFactory<T>
-    {
-        private readonly Func<IOwned<T>> creator;
-
-        public FuncFactory(Func<IOwned<T>> creator)
-        {
-            this.creator = creator;
-        }
-
-        public IOwned<T> Create()
-        {
-            return creator();
-        }
-    }
-
     public class AutofacFactory<T> : IFactory<T>
     {
         private readonly Func<Autofac.Features.OwnedInstances.Owned<T>, IOwned<T>> ownedFactory;

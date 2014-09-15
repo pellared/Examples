@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pellared.Owned;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,7 @@ namespace ApiLibrary
 
         public Drive()
         {
-            _motor = Bootstrapper.Get<IMotor>();
+            _motor = Bootstrapper.Get<IFactory<IMotor>>().Create().Value;
             _speed = Bootstrapper.Get<ISpeed>();
         }
 

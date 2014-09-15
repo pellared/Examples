@@ -1,4 +1,5 @@
 ﻿using Microsoft.Practices.ServiceLocation;
+using Pellared.Owned;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,12 @@ namespace ApiLibrary
 
             // using TinyIoC as internal in order that the clients could have any library they want
             Container = TinyIoCContainer.Current;
+
+
+            Container.Register(typeof(IOwned<>), typeof(Owned<>));
+            Container.Register(typeof(IFactory<>), typeof(FuncFactory<>));
+            Container.Register(typeof(IFactory<,>), typeof(FuncFactory<,>));
+
             Container.Register<IMotor, Motor>();
             Container.Register<ISpeed, Speed>();
         }
