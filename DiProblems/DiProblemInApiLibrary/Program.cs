@@ -39,7 +39,7 @@ namespace DiProblemInApiLibrary
         private static void Bootstrap()
         {
             var builder = new ContainerBuilder();
-            builder.RegisterOwned();
+            builder.RegisterFuncOwned();
             RegisterApplicationTypes(builder);
 
             Bootstrapper.RegisterSpeed<SuperSpeed>();

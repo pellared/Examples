@@ -13,7 +13,7 @@ namespace Pellared.Owned
         }
 
         // code for IoC Container which does not provide Owned functionality
-        private static ContainerBuilder RegisterFuncOwned(this ContainerBuilder builder)
+        public static ContainerBuilder RegisterFuncOwned(this ContainerBuilder builder)
         {
             builder.RegisterGeneric(typeof(Owned<>)).As(typeof(IOwned<>));
             builder.RegisterGeneric(typeof(FuncFactory<>)).As(typeof(IFactory<>));
