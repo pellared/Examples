@@ -13,6 +13,8 @@ namespace DiProblemInApiLibrary
 {
     class Program
     {
+        private static IContainer container;
+
         class SuperSpeed : ISpeed
         {
             public int KilometeresPerHour
@@ -30,15 +32,14 @@ namespace DiProblemInApiLibrary
             Bootstrap();
 
             Console.WriteLine("Resolving from ApiLibrary:");
-            var drive = new Drive();
-            drive.MotorSpeed = 100;
+            var drive = new Drive { MotorSpeed = 100 };
             drive.StartMotor();
 
             Console.WriteLine();
             Console.WriteLine();
 
             Console.WriteLine("Resolving from Application:");
-            ServiceLocator.Current.GetInstance<OwnedSample>(); // from this application
+            container.Resolve<OwnedSample>(); // from this application
         }
 
         private static void Bootstrap()
@@ -46,17 +47,13 @@ namespace DiProblemInApiLibrary
             var builder = new ContainerBuilder();
             builder.RegisterOwned();
             RegisterApplicationTypes(builder);
-            OverrideApiLibraryRegistration(builder);
 
-            var container = builder.Build();
-            ServiceLocator.SetLocatorProvider(() => new AutofacServiceLocator(container)); // if using the Current Locator
+            Bootstrapper.RegisterSpeed<SuperSpeed>();
+
+            container = builder.Build();
+            
+            //ServiceLocator.SetLocatorProvider(() => new AutofacServiceLocator(container)); // if using the Current Locator
             //Bootstrapper.Locator = new AutofacServiceLocator(container); // we could also make a collection of Locators if it would be neeeded
-        }
-
-        private static void OverrideApiLibraryRegistration(ContainerBuilder builder)
-        {
-            // changing the ISpeed implementation provided by ApiLibrary
-            builder.RegisterType<SuperSpeed>().As<ISpeed>();
         }
 
         private static void RegisterApplicationTypes(ContainerBuilder builder)
