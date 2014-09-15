@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Pellared.Owned
 {
@@ -22,7 +18,7 @@ namespace Pellared.Owned
 
         public void Dispose()
         {
-            IDisposable disposable = Value as IDisposable;
+            var disposable = Value as IDisposable;
             if (disposable != null)
             {
                 disposable.Dispose();

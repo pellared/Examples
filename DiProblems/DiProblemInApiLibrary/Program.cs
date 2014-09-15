@@ -1,13 +1,7 @@
 ﻿using ApiLibrary;
 using Autofac;
-using Autofac.Extras.CommonServiceLocator;
-using Microsoft.Practices.ServiceLocation;
 using Pellared.Owned;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DiProblemInApiLibrary
 {

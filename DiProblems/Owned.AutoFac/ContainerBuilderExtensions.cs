@@ -1,9 +1,4 @@
 ﻿using Autofac;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Pellared.Owned
 {
@@ -17,7 +12,7 @@ namespace Pellared.Owned
             return builder;
         }
 
-        // for other IoC Continers (such as unity)
+        // code for IoC Container which does not provide Owned functionality
         private static ContainerBuilder RegisterFuncOwned(this ContainerBuilder builder)
         {
             builder.RegisterGeneric(typeof(Owned<>)).As(typeof(IOwned<>));

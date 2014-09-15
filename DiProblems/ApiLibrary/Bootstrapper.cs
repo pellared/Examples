@@ -1,10 +1,4 @@
-﻿using Microsoft.Practices.ServiceLocation;
-using Pellared.Owned;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Pellared.Owned;
 using TinyIoC;
 
 namespace ApiLibrary
