@@ -42,7 +42,7 @@ namespace TddSample.Tests
 
         public bool IsValid(Person person)
         {
-            return !string.IsNullOrWhiteSpace(person.Name);
+            return PersonValidator.IsValid(person);
         }
     }
 

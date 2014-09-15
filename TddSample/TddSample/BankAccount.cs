@@ -23,7 +23,7 @@ namespace TddSample
                 throw new ArgumentException("amount is greater then current balance");
             }
 
-            Balance += amount;
+            Balance -= amount;
         }
 
         public void Credit(double amount)

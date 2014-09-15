@@ -7,11 +7,17 @@ namespace TddSample
     {
         static void Main(string[] args)
         {
+            var program = new Program();
+            program.ExecuteUnitTests();
+        }
+
+        void ExecuteUnitTests()
+        {
             Credit_WhenPostivie_ThenBalanceIsInreased();
             Debit_WhenLessThenBalance_ThenBalanceIsDecreased();
         }
 
-        static void Credit_WhenPostivie_ThenBalanceIsInreased()
+        void Credit_WhenPostivie_ThenBalanceIsInreased()
         {
             var bankAccount = new BankAccount(100);
 
@@ -20,7 +26,7 @@ namespace TddSample
             Assert(bankAccount.Balance == 112.5);
         }
 
-        static void Debit_WhenLessThenBalance_ThenBalanceIsDecreased()
+        void Debit_WhenLessThenBalance_ThenBalanceIsDecreased()
         {
             var bankAccount = new BankAccount(123);
 
@@ -29,11 +35,15 @@ namespace TddSample
             Assert(bankAccount.Balance == 100);
         }
 
-        private static void Assert(bool condition)
+        private void Assert(bool condition)
         {
             var stackTrace = new StackTrace();
             string testName = stackTrace.GetFrame(1).GetMethod().Name;
-            if (!condition)
+            if (condition)
+            {
+                Console.WriteLine("PASSED\t " + testName);
+            }
+            else
             {
                 Console.WriteLine("FAILED\t " + testName);
             }

@@ -5,7 +5,7 @@ using Xunit;
 
 namespace TddSample.Tests
 {
-    class ListTests
+    public class ListTests
     {
         [Fact]
         public void Add_OneElement_CountReturnsOne()
@@ -38,6 +38,7 @@ namespace TddSample.Tests
             list.Last().Should().Be(addedElement);
             list.Should().BeSameAs(new[] { 3, 2 });
               
+
             // there should be on unit test for each concept; not for each method!
 
             // tests should be trustworthy, maintainable and readable!

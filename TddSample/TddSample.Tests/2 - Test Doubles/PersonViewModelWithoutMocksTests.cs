@@ -6,7 +6,7 @@ using Xunit;
 
 namespace TddSample.Tests
 {
-    class PersonViewModelWithoutMocksTests
+    public class PersonViewModelWithoutMocksTests
     {
         class PersonRepositoryDummy : IPersonRepository
         {

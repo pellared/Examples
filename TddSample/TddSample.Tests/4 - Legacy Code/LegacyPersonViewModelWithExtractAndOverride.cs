@@ -46,7 +46,7 @@ namespace TddSample.Tests
         [Fact]
         public void Save_ValidUser_StatusWithName()
         {
-            var person = PersonMother.Create(DateTime.Now);
+            var person = PersonMother.Create();
             LegacyPersonViewModelWithExtractAndOverride sut = new LegacyPersonViewModelWithExtractAndOverrideUnderTest();
 
             sut.Save(person);

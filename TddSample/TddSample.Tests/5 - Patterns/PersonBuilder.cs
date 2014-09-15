@@ -14,7 +14,7 @@ namespace TddSample.Tests
             return this;
         }
 
-        public PersonBuilder WithName(DateTime birthDate)
+        public PersonBuilder WithBirthDate(DateTime birthDate)
         {
             this.birthDate = birthDate;
             return this;
