@@ -51,6 +51,7 @@
     <Compile Include="Disposable.cs" />
     <Compile Include="Disposer.cs" />
     <Compile Include="Factory.cs" />
+    <Compile Include="Finalizer.cs" />
     <Compile Include="Owned.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\DisposableTests.cs" />

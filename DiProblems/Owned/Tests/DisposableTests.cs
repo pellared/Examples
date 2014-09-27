@@ -33,7 +33,7 @@ namespace Pellared.Owned.Tests
 
             cut.Dispose();
 
-            Assert.True(cut.Disposed);
+            Assert.True(cut.IsDisposed);
         }
 
         [Fact]
@@ -41,7 +41,7 @@ namespace Pellared.Owned.Tests
         {
             using (var cut = new DisposableSpy())
             {
-                Assert.False(cut.Disposed);
+                Assert.False(cut.IsDisposed);
             }
         }
 
@@ -49,8 +49,6 @@ namespace Pellared.Owned.Tests
         {
             public bool IsDisposeManagedCalled { get; private set; }
             public bool IsDisposeUnmanagedCalled { get; private set; }
-
-            public bool Disposed { get { return IsDisposed; } }
 
             protected override void DisposeManaged()
             {

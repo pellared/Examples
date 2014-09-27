@@ -10,13 +10,23 @@ namespace Pellared.Owned
         const int DisposedFlag = 1;
         int _isDisposed;
 
-#if DEBUG
-        ~Disposable()
+        private readonly Finalizer finalizer;
+
+        public Disposable(bool withFinalizer = false)
+        {
+#if !DEBUG
+            if (withFinalizer)
+#endif
+            {
+                finalizer = new Finalizer(OnFinalize);
+            }
+        }
+
+        private void OnFinalize()
         {
             DisposeUnmanaged();
             Debug.Fail(GetType() + " in not disposed");
         }
-#endif
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
@@ -29,7 +39,11 @@ namespace Pellared.Owned
 
             DisposeManaged();
             DisposeUnmanaged();
-            GC.SuppressFinalize(this);
+
+            if (finalizer != null)
+            {
+                finalizer.SuppressFinalize();
+            }
         }
 
         protected virtual void DisposeManaged()
@@ -40,10 +54,7 @@ namespace Pellared.Owned
         {
         }
 
-        /// <summary>
-        /// Returns true if the current instance has been disposed; otherwise false;
-        /// </summary>
-        protected bool IsDisposed
+        public bool IsDisposed
         {
             get
             {
