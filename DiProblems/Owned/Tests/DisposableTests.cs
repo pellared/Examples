@@ -6,7 +6,7 @@ namespace Pellared.Owned.Tests
     public class DisposableTests
     {
         [Fact]
-        public void Should_invoke_DisposeManaged_and_DisposeUnmanaged_when_disposed()
+        public void Should_invoke_dispose_resources_when_Dispose()
         {
             var cut = new DisposableSpy();
 
@@ -17,13 +17,31 @@ namespace Pellared.Owned.Tests
         }
 
         [Fact]
-        public void Should_throw_exception_when_multiple_disposal()
+        public void Should_invoke_dispose_resources_once_when_Dispose_multiple_times()
         {
             var cut = new DisposableSpy();
-            Assert.ThrowsDelegate dispose = () => cut.Dispose();
-            dispose();
 
-            Assert.Throws<ObjectDisposedException>(dispose);
+            cut.Dispose();
+            cut.Dispose();
+
+            Assert.Equal(1, cut.DisposeResourcesCount);
+        }
+
+        [Fact]
+        public void Should_throw_exception_when_disposed_and_RequireNotDisposed_called()
+        {
+            var cut = new DisposableSpy();
+            cut.Dispose();
+
+            Assert.Throws<ObjectDisposedException>(() => cut.CallRequireNotDisposed());
+        }
+
+        [Fact]
+        public void Should_not_throw_exception_when_not_disposed_and_RequireNotDisposed_called()
+        {
+            var cut = new DisposableSpy();
+
+            Assert.DoesNotThrow(() => cut.CallRequireNotDisposed());
         }
 
         [Fact]
@@ -47,12 +65,19 @@ namespace Pellared.Owned.Tests
 
         private class DisposableSpy : Disposable
         {
+            public int DisposeResourcesCount { get; private set; }
             public bool IsDisposeManagedCalled { get; private set; }
             public bool IsDisposeUnmanagedCalled { get; private set; }
 
+            public void CallRequireNotDisposed()
+            {
+                RequireNotDisposed();
+            }
+            
             protected override void DisposeManaged()
             {
                 IsDisposeManagedCalled = true;
+                DisposeResourcesCount++;
             }
 
             protected override void DisposeUnmanaged()
