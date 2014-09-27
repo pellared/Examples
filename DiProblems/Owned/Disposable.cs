@@ -31,7 +31,7 @@ namespace Pellared.Owned
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
-        [SuppressMessage("Microsoft.Design", "CA1063:ImplementIDisposableCorrectly", Justification = "Dispose is implemented correctly, FxCop just doesn't see it.")]
+        [SuppressMessage("Microsoft.Design", "CA1063:ImplementIDisposableCorrectly", Justification = "Dispose is implemented correctly")]
         public void Dispose()
         {
             int wasDisposed = Interlocked.Exchange(ref _isDisposed, DisposedFlag);
