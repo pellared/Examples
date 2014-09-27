@@ -10,20 +10,11 @@ namespace Pellared.Owned.Tests
             bool isActionInvoked = false;
 
             using (new Disposer(() => isActionInvoked = true))
-            { }
-
-            Assert.True(isActionInvoked);
-        }
-
-        [Fact]
-        public void Should_action_not_invoed_before_disposal()
-        {
-            bool isActionInvoked = false;
-
-            using (new Disposer(() => isActionInvoked = true))
             {
                 Assert.False(isActionInvoked);
             }
+
+            Assert.True(isActionInvoked);
         }
     }
 }
