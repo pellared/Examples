@@ -7,14 +7,18 @@ namespace Pellared.Owned
 {
     public class Disposable : IDisposable
     {
-        const int DisposedFlag = 1;
-        int _isDisposed;
-
+        private const int DisposedFlag = 1;
+        
         private readonly Finalizer finalizer;
+        private readonly StackTrace creationStackTrace;
+
+        private int _isDisposed;
 
         public Disposable(bool withFinalizer = false)
         {
-#if !DEBUG
+#if DEBUG
+            creationStackTrace = new StackTrace();
+#else
             if (withFinalizer)
 #endif
             {
@@ -25,7 +29,9 @@ namespace Pellared.Owned
         private void OnFinalize()
         {
             DisposeUnmanaged();
-            Debug.Fail(GetType() + " in not disposed");
+#if DEBUG
+            Debug.Fail(GetType() + " in not disposed" + Environment.NewLine + creationStackTrace);
+#endif
         }
 
         /// <summary>
@@ -35,14 +41,9 @@ namespace Pellared.Owned
         public void Dispose()
         {
             int wasDisposed = Interlocked.Exchange(ref _isDisposed, DisposedFlag);
-            EnsureNotDisposed(wasDisposed);
-
-            DisposeManaged();
-            DisposeUnmanaged();
-
-            if (finalizer != null)
+            if (wasDisposed != DisposedFlag)
             {
-                finalizer.SuppressFinalize();
+                DisposeResources();
             }
         }
 
@@ -54,6 +55,15 @@ namespace Pellared.Owned
         {
         }
 
+        protected void RequireNotDisposed()
+        {
+            if (IsDisposed)
+            {
+                string typeName = GetType().FullName;
+                throw new ObjectDisposedException(typeName);
+            }
+        }
+
         public bool IsDisposed
         {
             get
@@ -63,13 +73,14 @@ namespace Pellared.Owned
             }
         }
 
-        private void EnsureNotDisposed(int wasDisposed)
+        private void DisposeResources()
         {
-            if (wasDisposed == DisposedFlag)
+            DisposeManaged();
+            DisposeUnmanaged();
+
+            if (finalizer != null)
             {
-                string typeName = GetType().FullName;
-                string stackTrace = new StackTrace().ToString();
-                throw new ObjectDisposedException(typeName, stackTrace);
+                finalizer.SuppressFinalize();
             }
         }
     }
