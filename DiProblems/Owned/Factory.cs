@@ -12,18 +12,18 @@ namespace Pellared.Owned
         IOwned<TOut> Create(T input);
     }
 
-    public class FuncFactory<T> : IFactory<T>
+    public class Factory<T> : IFactory<T>
     {
         private readonly Func<T, IOwned<T>> ownedFactory;
         private readonly Func<T> creator;
 
-        public FuncFactory(Func<T, IOwned<T>> ownedFactory, Func<T> creator)
+        public Factory(Func<T, IOwned<T>> ownedFactory, Func<T> creator)
         {
             this.ownedFactory = ownedFactory;
             this.creator = creator;
         }
 
-        public FuncFactory(Func<T> creator)
+        public Factory(Func<T> creator)
             : this(Owned.Create, creator)
         {
         }
@@ -36,18 +36,18 @@ namespace Pellared.Owned
         }
     }
 
-    public class FuncFactory<T, TOut> : IFactory<T, TOut>
+    public class Factory<T, TOut> : IFactory<T, TOut>
     {
         private readonly Func<TOut, IOwned<TOut>> ownedFactory;
         private readonly Func<T, TOut> creator;
 
-        public FuncFactory(Func<TOut, IOwned<TOut>> ownedFactory, Func<T, TOut> creator)
+        public Factory(Func<TOut, IOwned<TOut>> ownedFactory, Func<T, TOut> creator)
         {
             this.ownedFactory = ownedFactory;
             this.creator = creator;
         }
 
-        public FuncFactory(Func<T, TOut> creator)
+        public Factory(Func<T, TOut> creator)
             : this(Owned.Create, creator)
         {
         }

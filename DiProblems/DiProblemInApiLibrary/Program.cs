@@ -5,23 +5,25 @@ using System;
 
 namespace DiProblemInApiLibrary
 {
-    class Program
+    internal class Program
     {
         private static IContainer container;
 
-        class SuperSpeed : ISpeed
+        private static void Bootstrap()
         {
-            public int KilometeresPerHour
-            {
-                get
-                {
-                    return 1000;
-                }
-                set { }
-            }
+            var builder = new ContainerBuilder();
+            builder.RegisterCustomOwned();
+            RegisterApplicationTypes(builder);
+
+            Bootstrapper.RegisterSpeed<SuperSpeed>();
+
+            container = builder.Build();
+
+            //ServiceLocator.SetLocatorProvider(() => new AutofacServiceLocator(container)); // if using the Current Locator
+            //Bootstrapper.Locator = new AutofacServiceLocator(container); // we could also make a collection of Locators if it would be neeeded
         }
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Bootstrap();
 
@@ -36,25 +38,23 @@ namespace DiProblemInApiLibrary
             container.Resolve<OwnedSample>(); // from this application
         }
 
-        private static void Bootstrap()
-        {
-            var builder = new ContainerBuilder();
-            builder.RegisterFuncOwned();
-            RegisterApplicationTypes(builder);
-
-            Bootstrapper.RegisterSpeed<SuperSpeed>();
-
-            container = builder.Build();
-            
-            //ServiceLocator.SetLocatorProvider(() => new AutofacServiceLocator(container)); // if using the Current Locator
-            //Bootstrapper.Locator = new AutofacServiceLocator(container); // we could also make a collection of Locators if it would be neeeded
-        }
-
         private static void RegisterApplicationTypes(ContainerBuilder builder)
         {
             builder.Register(_ => new Some()).As<ISome>();
             builder.RegisterType<Some>().As<IWithArg>();
             builder.RegisterType<OwnedSample>();
+        }
+
+        private class SuperSpeed : ISpeed
+        {
+            public int KilometeresPerHour
+            {
+                get
+                {
+                    return 1000;
+                }
+                set { }
+            }
         }
     }
 }

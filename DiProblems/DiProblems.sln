@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiProblemInApiLibrary", "DiProblemInApiLibrary\DiProblemInApiLibrary.csproj", "{18F1789F-8B51-43F5-8FAE-40E91CDF7326}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "DiProblemInApiLibrary\Application.csproj", "{18F1789F-8B51-43F5-8FAE-40E91CDF7326}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiLibrary", "ApiLibrary\ApiLibrary.csproj", "{613166B5-B239-4FBB-9B42-938CA11A5CD2}"
 EndProject

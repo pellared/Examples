@@ -4,14 +4,32 @@ using Xunit;
 
 namespace Pellared.Owned.Tests
 {
-    public class RegisterOwnedTests
+    public class RegisterAutofacOwnedTests : RegisterOwnedTests
+    {
+
+        protected override void RegisterOwned(ContainerBuilder builder)
+        {
+            builder.RegisterAutofacOwned();
+        }
+    }
+
+    public class RegisterCustomOwnedTests : RegisterOwnedTests
+    {
+
+        protected override void RegisterOwned(ContainerBuilder builder)
+        {
+            builder.RegisterCustomOwned();
+        }
+    }
+
+    public abstract class RegisterOwnedTests
     {
         private readonly IContainer container;
 
         public RegisterOwnedTests()
         {
             var builder = new ContainerBuilder();
-            builder.RegisterOwned();
+            RegisterOwned(builder);
 
             var assembly = Assembly.GetExecutingAssembly();
             builder.RegisterAssemblyTypes(assembly).AsSelf();
@@ -19,12 +37,14 @@ namespace Pellared.Owned.Tests
             container = builder.Build();
         }
 
+        protected abstract void RegisterOwned(ContainerBuilder containerBuilder);
+
         [Fact]
-        public void Should_resolve_AutofacOwned()
+        public void Should_resolve_Owned()
         {
             var instance = container.Resolve<ClassWithOwned>();
 
-            Assert.IsType<AutofacOwned<Normal>>(instance.Owned);
+            Assert.IsType<Normal>(instance.Owned.Value);
         }
 
         private class ClassWithOwned
@@ -38,11 +58,11 @@ namespace Pellared.Owned.Tests
         }
 
         [Fact]
-        public void Should_resolve_AutofacFactory_Normal()
+        public void Should_resolve_Factory_Normal()
         {
             var instance = container.Resolve<ClassWithFactory>();
 
-            Assert.IsType<AutofacFactory<Normal>>(instance.Factory);
+            Assert.IsType<Normal>(instance.Factory.Create().Value);
         }
 
         private class ClassWithFactory
@@ -56,29 +76,35 @@ namespace Pellared.Owned.Tests
         }
 
         [Fact]
-        public void Should_resolve_AutofacFactory_WithArg()
+        public void Should_resolve_Factory_WithArg()
         {
             var instance = container.Resolve<ClassWithFactoryWithArg>();
+            var argument = "asd";
+            var result = instance.Factory.Create(argument).Value;
 
-            Assert.IsType<AutofacFactory<Normal, WithArg>>(instance.Factory);
+
+            Assert.IsType<WithArg>(result);
+            Assert.Equal(argument, result.Argument);
         }
 
         private class ClassWithFactoryWithArg
         {
-            public IFactory<Normal, WithArg> Factory { get; private set; }
+            public IFactory<string, WithArg> Factory { get; private set; }
 
-            public ClassWithFactoryWithArg(IFactory<Normal, WithArg> factory)
+            public ClassWithFactoryWithArg(IFactory<string, WithArg> factory)
             {
                 Factory = factory;
             }
         }
 
         [Fact]
-        public void Should_resolve_AutofacFactory_WithArgOnly()
+        public void Should_resolve_Factory_WithArgOnly()
         {
             var instance = container.Resolve<ClassWithFactoryWithArgOnly>();
+            var result = instance.Factory.Create().Value;
 
-            Assert.IsType<AutofacFactory<WithArg>>(instance.Factory);
+            Assert.IsType<WithArg>(result);
+            Assert.Null(result.Argument);
         }
 
         private class ClassWithFactoryWithArgOnly
@@ -97,8 +123,15 @@ namespace Pellared.Owned.Tests
 
         private class WithArg
         {
+            public string Argument { get; private set; }
+
+            public WithArg()
+            {
+            }
+
             public WithArg(string argument)
             {
+                Argument = argument;
             }
         }
     }
