@@ -10,10 +10,11 @@ namespace Pellared.Owned.Tests
         public void Should_have_provided_value()
         {
             string value = "hello";
-            
-            var cut = new Owned<string>(value);
 
-            Assert.Equal(value, cut.Value);
+            using (var cut = new Owned<string>(value))
+            {
+                Assert.Equal(value, cut.Value);
+            }
         }
 
         [Fact]
