@@ -39,9 +39,10 @@ namespace Pellared.Owned.Tests
         [Fact]
         public void Should_not_throw_exception_when_not_disposed_and_RequireNotDisposed_called()
         {
-            var cut = new DisposableSpy();
-
-            Assert.DoesNotThrow(() => cut.CallRequireNotDisposed());
+            using (var cut = new DisposableSpy())
+            {
+                Assert.DoesNotThrow(cut.CallRequireNotDisposed);
+            }
         }
 
         [Fact]
