@@ -54,6 +54,7 @@
     <Compile Include="Finalizer.cs" />
     <Compile Include="Owned.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Shared.cs" />
     <Compile Include="Tests\DisposableTests.cs" />
     <Compile Include="Tests\DisposerTests.cs" />
     <Compile Include="Tests\FactoryTests.cs" />
