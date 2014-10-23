@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bootstrapper.cs" />
+    <Compile Include="ApiLibraryConfiguration.cs" />
     <Compile Include="Drive.cs" />
     <Compile Include="DriveBuilder.cs" />
     <Compile Include="Internal implementations.cs" />

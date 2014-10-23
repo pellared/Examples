@@ -3,19 +3,14 @@ using TinyIoC;
 
 namespace ApiLibrary
 {
-    public class Bootstrapper
+    public class ApiLibraryConfiguration
     {
         private static readonly TinyIoCContainer Container;
 
-        static Bootstrapper()
+        static ApiLibraryConfiguration()
         {
-            // using TinyIoC as internal in order that the clients could have any library they want
+            // using TinyIoC as internal in order that the clients could have any library they want :)
             Container = TinyIoCContainer.Current;
-
-
-            Container.Register(typeof(IOwned<>), typeof(Owned<>));
-            Container.Register(typeof(IFactory<>), typeof(Factory<>));
-            Container.Register(typeof(IFactory<,>), typeof(Factory<,>));
 
             Container.Register<IMotor, Motor>();
             Container.Register<ISpeed, Speed>();

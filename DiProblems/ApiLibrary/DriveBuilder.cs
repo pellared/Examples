@@ -20,7 +20,7 @@ namespace ApiLibrary
         {
             if (_speed == null)
             {
-                _speed = Bootstrapper.Get<ISpeed>();
+                _speed = ApiLibraryConfiguration.Get<ISpeed>();
             }
 
             return new Drive(_speed);

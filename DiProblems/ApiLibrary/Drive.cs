@@ -15,13 +15,13 @@ namespace ApiLibrary
         private readonly ISpeed _speed;
 
         public Drive()
-            : this(Bootstrapper.Get<ISpeed>())
+            : this(ApiLibraryConfiguration.Get<ISpeed>())
         { }
 
         public Drive(ISpeed speed)
         {
             _speed = speed;
-            _motor = Bootstrapper.Get<IFactory<IMotor>>().Create().Value;
+            _motor = ApiLibraryConfiguration.Get<IMotor>();
         }
 
         public void StartMotor()
