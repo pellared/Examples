@@ -3,11 +3,13 @@
   <Comment CommentText="Converts into Rolls collection">
     <Position X="4.021" Y="0.771" Height="0.365" Width="1.96" />
   </Comment>
+  <Comment CommentText="pointRollsCount = 20&#xD;&#xA;Strikes decremetns by 2&#xD;&#xA;other Rolls by 1">
+    <Position X="1.271" Y="3.302" Height="0.802" Width="1.7" />
+  </Comment>
   <Class Name="KataBowling.BowlingGame">
     <Position X="0.5" Y="0.5" Width="2" />
     <Members>
       <Method Name="BowlingGame" Hidden="true" />
-      <Method Name="IsStrike" Hidden="true" />
       <Method Name="Parse" Hidden="true" />
       <Method Name="SumPointsWithBonuses" Hidden="true" />
     </Members>
@@ -22,7 +24,7 @@
       </Class>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>ABAgAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
+      <HashCode>ABAgAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>BowlingGame.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -30,12 +32,12 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="KataBowling.Roll">
-    <Position X="3.25" Y="2" Width="1.5" />
+    <Position X="3.5" Y="2" Width="1.5" />
     <Members>
       <Method Name="Roll" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAQAEAAA=</HashCode>
       <FileName>Roll.cs</FileName>
     </TypeIdentifier>
   </Class>

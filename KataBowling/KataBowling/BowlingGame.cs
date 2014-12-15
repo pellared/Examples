@@ -61,18 +61,13 @@ namespace KataBowling
                 bool result = pointingRollsCount > 0;
 
                 pointingRollsCount--;
-                if (IsStrike(roll))
+                if (roll.IsStrike)
                 {
                     pointingRollsCount--;
                 }
 
                 return result;
             }
-        }
-
-        private static bool IsStrike(Roll roll)
-        {
-            return roll.Points == 10;
         }
     }
 }

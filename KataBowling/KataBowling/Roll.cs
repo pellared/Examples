@@ -22,5 +22,13 @@ namespace KataBowling
         public int Points { get; private set; }
 
         public int BonusRollCount { get; private set; }
+
+        public bool IsStrike
+        {
+            get
+            {
+                return Points == 10;
+            }
+        }
     }
 }
