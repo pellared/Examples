@@ -4,7 +4,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace KataBowling.Tests
 {
-    
     [TestClass]
     public class BowlingGameTests
     {
