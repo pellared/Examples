@@ -25,7 +25,7 @@ namespace KataBowling
             {
                 var currentRoll = rolls[rollIndex];
 
-                if (pointingRollsCounter.IsPointingRoll(currentRoll))
+                if (pointingRollsCounter.IsPointing(currentRoll))
                 {
                     result = SumPointsWithBonuses(result, rolls, rollIndex, currentRoll.BonusRollCount);
                 }
@@ -56,7 +56,7 @@ namespace KataBowling
         {
             private int pointingRollsCount = 20;
 
-            public bool IsPointingRoll(Roll roll)
+            public bool IsPointing(Roll roll)
             {
                 bool result = pointingRollsCount > 0;
 
