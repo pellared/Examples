@@ -95,7 +95,7 @@ namespace KataBowling.Tests
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void Should_throw_InvalidArgumentException_for_invalid_Scorecard_format()
+        public void throws_InvalidArgumentException_when_invalid_Scorecard_format()
         {
             game.CalculateScore(".");
         }
