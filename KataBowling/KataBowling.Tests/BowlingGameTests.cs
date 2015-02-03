@@ -11,7 +11,13 @@ namespace KataBowling.Tests
         // - miss
         // / spare
         // X strike
-        private readonly BowlingGame game = new BowlingGame(new ScorecardParser());
+        private readonly BowlingGame game = BowlingGameBootstrapper.Create();
+
+        [TestMethod]
+        public void BowlingGameBootstrapper_is_creating_using_InputParser()
+        {
+            Assert.IsInstanceOfType(game.Parser, typeof(ScorecardParser));
+        }
 
         [TestMethod]
         public void does_not_count_points_when_miss()

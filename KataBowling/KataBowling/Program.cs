@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KataBowling
 {
@@ -13,7 +9,7 @@ namespace KataBowling
             try
             {
                 ValidateArguments(args);
-                var game = new BowlingGame(new ScorecardParser());
+                var game = BowlingGameBootstrapper.Create();
                 int result = game.CalculateScore(args[0]);
                 Console.WriteLine("Result: " + result);
             }

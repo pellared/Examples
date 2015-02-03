@@ -42,7 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BowlingGame.cs" />
-    <Compile Include="InputParser.cs" />
+    <Compile Include="BowlingGameBootstrapper.cs" />
+    <Compile Include="ScorecardParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Roll.cs" />
