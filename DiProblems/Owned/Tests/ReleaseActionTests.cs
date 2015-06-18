@@ -5,7 +5,7 @@ namespace Pellared.Owned.Tests
     public class ReleaseActionTests
     {
         [Fact]
-        public void Should_invoke_action_when_disposed()
+        public void Invokes_action_when_disposed()
         {
             bool isActionInvoked = false;
 

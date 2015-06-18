@@ -6,7 +6,7 @@ namespace Pellared.Owned.Tests
     public class DisposableBaseTests
     {
         [Fact]
-        public void Should_invoke_dispose_resources_when_Dispose()
+        public void Dispose_resources_when_Dispose()
         {
             var cut = new DisposableUnderTest();
 
@@ -19,7 +19,7 @@ namespace Pellared.Owned.Tests
         }
 
         [Fact]
-        public void Should_invoke_dispose_resources_once_when_Dispose_multiple_times()
+        public void Dispose_resources_once_when_Dispose_multiple_times()
         {
             var cut = new DisposableUnderTest();
 
@@ -48,7 +48,7 @@ namespace Pellared.Owned.Tests
         }
 
         [Fact]
-        public void Should_be_IsDisposed_when_disposed()
+        public void IsDisposed_when_disposed()
         {
             var cut = new DisposableUnderTest();
 
@@ -58,7 +58,7 @@ namespace Pellared.Owned.Tests
         }
 
         [Fact]
-        public void Should_not_be_IsDisposed_when_not_disposed()
+        public void Not_IsDisposed_when_not_disposed()
         {
             using (var cut = new DisposableUnderTest())
             {
