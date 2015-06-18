@@ -74,13 +74,13 @@ namespace Pellared.Owned
 
     public static class Owned
     {
-        public static IOwned<T> Create<T>(T instance)
+        public static Owned<T> Create<T>(T instance)
             where T : class
         {
             return new Owned<T>(instance);
         }
 
-        public static IOwned<T> CreateWithDelegatedDispose<T>(T instance, params IDisposable[] disposables)
+        public static OwnedWithDelegatedDispose<T> CreateWithDelegatedDispose<T>(T instance, params IDisposable[] disposables)
             where T : class
         {
             return new OwnedWithDelegatedDispose<T>(instance, disposables);

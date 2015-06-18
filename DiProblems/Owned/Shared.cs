@@ -2,22 +2,15 @@
 
 namespace Pellared.Owned
 {
-    public interface IShared<out T>
-        where T : class
-    {
-        IOwned<T> Share();
-    }
-
-    // TODO: tests
-    public class Shared<T> : DisposableBase, IShared<T>
+    public class Shared<T> : DisposableBase
         where T : class
     {
         private readonly object syncRoot = new object();
-        private readonly IFactory<T> factory;
-        private IOwned<T> instance;
+        private readonly Func<T> factory;
+        private Owned<T> instance;
         private int referenceCount;
 
-        public Shared(IFactory<T> factory)
+        public Shared(Func<T> factory)
         {
             Require.NotNull(factory, "factory");
 
@@ -32,7 +25,7 @@ namespace Pellared.Owned
             {
                 if (referenceCount == 0)
                 {
-                    instance = factory.Create();
+                    instance = Owned.Create(factory());
                 }
 
                 referenceCount++;
