@@ -3,11 +3,14 @@
 namespace Pellared.Owned
 {
     public interface IShared<out T>
+        where T : class
     {
         IOwned<T> Share();
     }
 
-    public class Shared<T> : IShared<T>
+    // TODO: tests
+    public class Shared<T> : DisposableBase, IShared<T>
+        where T : class
     {
         private readonly object syncRoot = new object();
         private readonly IFactory<T> factory;
@@ -16,11 +19,15 @@ namespace Pellared.Owned
 
         public Shared(IFactory<T> factory)
         {
+            Require.NotNull(factory, "factory");
+
             this.factory = factory;
         }
 
         public IOwned<T> Share()
         {
+            Require.NotDisposed(this);
+
             lock (syncRoot)
             {
                 if (referenceCount == 0)
@@ -31,6 +38,19 @@ namespace Pellared.Owned
                 referenceCount++;
 
                 return new ReferenceToShared(instance.Value, ReleaseOne);
+            }
+        }
+
+        protected override void DisposeManaged()
+        {
+            base.DisposeManaged();
+
+            lock (syncRoot)
+            {
+                if (instance != null)
+                {
+                    instance.Dispose();
+                }
             }
         }
 
@@ -49,7 +69,7 @@ namespace Pellared.Owned
 
         }
 
-        private class ReferenceToShared : Disposer, IOwned<T>
+        private class ReferenceToShared : ReleaseAction, IOwned<T>
         {
             private readonly T value;
 

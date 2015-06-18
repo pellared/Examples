@@ -3,6 +3,7 @@
 namespace Pellared.Owned
 {
     public class AutofacFactory<T> : IFactory<T>
+        where T : class
     {
         private readonly Func<Autofac.Features.OwnedInstances.Owned<T>, IOwned<T>> ownedFactory;
         private readonly Func<Autofac.Features.OwnedInstances.Owned<T>> creator;
@@ -22,6 +23,7 @@ namespace Pellared.Owned
     }
 
     public class AutofacFactory<T, TOut> : IFactory<T, TOut>
+        where TOut : class
     {
         private readonly Func<Autofac.Features.OwnedInstances.Owned<TOut>, IOwned<TOut>> ownedFactory;
         private readonly Func<T, Autofac.Features.OwnedInstances.Owned<TOut>> creator;

@@ -7,7 +7,7 @@ namespace Pellared.Owned.Tests
     public class OwnedTests
     {
         [Fact]
-        public void Should_have_provided_value()
+        public void Has_Value()
         {
             string value = "hello";
 
@@ -18,7 +18,7 @@ namespace Pellared.Owned.Tests
         }
 
         [Fact]
-        public void Should_work_if_not_disposable()
+        public void Dispose_does_nothing_when_Value_not_disposable()
         {
             string value = "hello";
 
@@ -28,14 +28,15 @@ namespace Pellared.Owned.Tests
         }
 
         [Fact]
-        public void Should_dispose_the_value()
+        public void Dispose_disposes_when_Value_disposable()
         {
             var disposable = new Mock<IDisposable>();
-            IOwned<IDisposable> cut = Owned.Create(disposable.Object);
+            using (IOwned<IDisposable> cut = Owned.Create(disposable.Object))
+            {
+                disposable.Verify(x => x.Dispose(), Times.Never);
+            }
 
-            cut.Dispose();
-
-            disposable.Verify(x => x.Dispose());
+            disposable.Verify(x => x.Dispose(), Times.Once);
         }
     }
 }

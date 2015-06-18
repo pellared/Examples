@@ -1,6 +1,7 @@
 ﻿namespace Pellared.Owned
 {
     public class AutofacOwned<T> : IOwned<T>
+        where T : class
     {
         private readonly Autofac.Features.OwnedInstances.Owned<T> owned;
 

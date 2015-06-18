@@ -1,4 +1,9 @@
-﻿using System;
+﻿using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Pellared.Owned.Tests
@@ -6,84 +11,37 @@ namespace Pellared.Owned.Tests
     public class DisposableTests
     {
         [Fact]
-        public void Should_invoke_dispose_resources_when_Dispose()
+        public void Dispose_DisposesObjectsAddedToDisposer()
         {
-            var cut = new DisposableSpy();
-
-            cut.Dispose();
-
-            Assert.True(cut.IsDisposeManagedCalled);
-            Assert.True(cut.IsDisposeUnmanagedCalled);
-        }
-
-        [Fact]
-        public void Should_invoke_dispose_resources_once_when_Dispose_multiple_times()
-        {
-            var cut = new DisposableSpy();
-
-            cut.Dispose();
-            cut.Dispose();
-
-            Assert.Equal(1, cut.DisposeResourcesCount);
-        }
-
-        [Fact]
-        public void Should_throw_exception_when_disposed_and_RequireNotDisposed_called()
-        {
-            var cut = new DisposableSpy();
-            cut.Dispose();
-
-            Assert.Throws<ObjectDisposedException>(() => cut.CallRequireNotDisposed());
-        }
-
-        [Fact]
-        public void Should_not_throw_exception_when_not_disposed_and_RequireNotDisposed_called()
-        {
-            using (var cut = new DisposableSpy())
+            var disposable = new Mock<IDisposable>();
+            var actionVerifier = new ActionVerifer();
+            using (var cut = new DisposableUnderTest())
             {
-                Assert.DoesNotThrow(cut.CallRequireNotDisposed);
+                cut.AddForDisposalToTheDisposer(disposable.Object, actionVerifier.Action);
+
+                disposable.Verify(x => x.Dispose(), Times.Never);
+                actionVerifier.VerifyNeverCalled();
+            }
+
+            disposable.Verify(x => x.Dispose(), Times.Once);
+            actionVerifier.VerifyCalledOnce();
+        }
+
+        [Fact]
+        public void HasTheSamePropertiesAs_DiposableBase()
+        {
+            using (var cut = new DisposableUnderTest())
+            {
+                Assert.IsAssignableFrom<DisposableBase>(cut);
             }
         }
 
-        [Fact]
-        public void Should_be_IsDisposed_when_disposed()
+        private class DisposableUnderTest : Disposable
         {
-            var cut = new DisposableSpy();
-
-            cut.Dispose();
-
-            Assert.True(cut.IsDisposed);
-        }
-
-        [Fact]
-        public void Should_not_be_IsDisposed_when_not_disposed()
-        {
-            using (var cut = new DisposableSpy())
+            public void AddForDisposalToTheDisposer(IDisposable disposable, Action action)
             {
-                Assert.False(cut.IsDisposed);
-            }
-        }
-
-        private class DisposableSpy : Disposable
-        {
-            public int DisposeResourcesCount { get; private set; }
-            public bool IsDisposeManagedCalled { get; private set; }
-            public bool IsDisposeUnmanagedCalled { get; private set; }
-
-            public void CallRequireNotDisposed()
-            {
-                RequireNotDisposed();
-            }
-            
-            protected override void DisposeManaged()
-            {
-                IsDisposeManagedCalled = true;
-                DisposeResourcesCount++;
-            }
-
-            protected override void DisposeUnmanaged()
-            {
-                IsDisposeUnmanagedCalled = true;
+                Disposer.AddForDisposal(disposable);
+                Disposer.AddOnDisposeAction(action);
             }
         }
     }

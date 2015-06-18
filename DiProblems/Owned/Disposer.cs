@@ -1,20 +1,48 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Pellared.Owned
 {
-    public class Disposer : Disposable
+    public interface IDisposer
     {
-        private readonly Action action;
+        void AddForDisposal(IDisposable disposable);
+    }
 
-        public Disposer(Action action)
+    public class Disposer : DisposableBase, IDisposer
+    {
+        private Stack<IDisposable> disposables = new Stack<IDisposable>();
+
+        public void AddForDisposal(IDisposable disposable)
         {
-            if (action == null) throw new ArgumentNullException("action");
-            this.action = action;
+            Require.NotDisposed(this);
+            Require.NotNull(disposable, "disposableValue");
+
+            disposables.Push(disposable);
         }
 
         protected override void DisposeManaged()
         {
-            action();
+            base.DisposeManaged();
+            while (disposables.Any())
+            {
+                IDisposable disposable = disposables.Pop();
+                disposable.Dispose();
+            }
+        }
+    }
+
+    public static class DisposerExtensions
+    {
+
+        public static void AddOnDisposeAction(this IDisposer disposer, Action action)
+        {
+            Require.NotNull(action, "action");
+
+            var releaseAction = new ReleaseAction(action);
+            disposer.AddForDisposal(releaseAction);
         }
     }
 }

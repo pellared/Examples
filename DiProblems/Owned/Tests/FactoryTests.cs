@@ -7,19 +7,21 @@ namespace Pellared.Owned.Tests
     public class FactoryTests
     {
         [Fact]
-        public void Should_create()
+        public void Creates_Owned()
         {
             var injected = "asd";
             var cut = new Factory<string>(() => injected);
 
-            var result = cut.Create();
-
-            Assert.Equal(injected, result.Value);
+            using (IOwned<string> result = cut.Create())
+            {
+                Assert.IsType<Owned<string>>(result);
+                Assert.Equal(injected, result.Value);
+            }
         }
 
 
         [Fact]
-        public void Should_create_with_argument()
+        public void Create_Owned_with_argument()
         {
             bool isProvidingArgumentToCreator = false;
             int argument = 3;
@@ -31,10 +33,13 @@ namespace Pellared.Owned.Tests
             };
             var cut = new Factory<int, string>(creator);
 
-            var result = cut.Create(argument);
+            using (IOwned<string> result = cut.Create(argument))
+            {
 
-            Assert.Equal(injected, result.Value);
-            Assert.True(isProvidingArgumentToCreator);
+                Assert.IsType<Owned<string>>(result);
+                Assert.Equal(injected, result.Value);
+                Assert.True(isProvidingArgumentToCreator);
+            }
         }
     }
 }

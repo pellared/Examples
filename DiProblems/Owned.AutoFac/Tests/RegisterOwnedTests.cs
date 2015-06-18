@@ -44,7 +44,10 @@ namespace Pellared.Owned.Tests
         {
             var instance = container.Resolve<ClassWithOwned>();
 
-            Assert.IsType<Normal>(instance.Owned.Value);
+            using (IOwned<Normal> result = instance.Owned)
+            {
+                Assert.IsType<Normal>(result.Value);
+            }
         }
 
         private class ClassWithOwned
@@ -62,7 +65,10 @@ namespace Pellared.Owned.Tests
         {
             var instance = container.Resolve<ClassWithFactory>();
 
-            Assert.IsType<Normal>(instance.Factory.Create().Value);
+            using (IOwned<Normal> result = instance.Factory.Create())
+            {
+                Assert.IsType<Normal>(result.Value);
+            }
         }
 
         private class ClassWithFactory
@@ -80,11 +86,12 @@ namespace Pellared.Owned.Tests
         {
             var instance = container.Resolve<ClassWithFactoryWithArg>();
             var argument = "asd";
-            var result = instance.Factory.Create(argument).Value;
 
-
-            Assert.IsType<WithArg>(result);
-            Assert.Equal(argument, result.Argument);
+            using (IOwned<WithArg> result = instance.Factory.Create(argument))
+            {
+                Assert.IsType<WithArg>(result.Value);
+                Assert.Equal(argument, result.Value.Argument);
+            }
         }
 
         private class ClassWithFactoryWithArg
@@ -101,10 +108,12 @@ namespace Pellared.Owned.Tests
         public void Should_resolve_Factory_WithArgOnly()
         {
             var instance = container.Resolve<ClassWithFactoryWithArgOnly>();
-            var result = instance.Factory.Create().Value;
 
-            Assert.IsType<WithArg>(result);
-            Assert.Null(result.Argument);
+            using (IOwned<WithArg> result = instance.Factory.Create())
+            {
+                Assert.IsType<WithArg>(result.Value);
+                Assert.Null(result.Value.Argument);
+            }
         }
 
         private class ClassWithFactoryWithArgOnly
